@@ -1,0 +1,9 @@
+plugins {
+    id 'java'
+}
+
+allprojects {
+    apply plugin: 'java-library'
+    group 'me.reidj'
+    version '1.0-SNAPSHOT'
+}

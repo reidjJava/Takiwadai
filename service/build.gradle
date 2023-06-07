@@ -1,0 +1,13 @@
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/releases"
+    }
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation 'io.nats:jnats:2.16.0'
+    compileOnly 'com.google.code.gson:gson:2.10.1'
+}
