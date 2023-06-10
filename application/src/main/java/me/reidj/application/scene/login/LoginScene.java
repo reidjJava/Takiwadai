@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import me.reidj.application.scene.AbstractScene;
-import me.reidj.client.client.NatsClient;
+import me.reidj.client.client.Nats;
+import me.reidj.client.protocol.LoginUserPackage;
 
 public class LoginScene extends AbstractScene {
 
@@ -19,6 +20,6 @@ public class LoginScene extends AbstractScene {
 
     @FXML
     void goAuth() {
-        System.out.println(NatsClient.publishAndWaitResponse("saveUser", "test"));
+        Nats.publishAndWaitResponse(LoginUserPackage.class, "saveUser");
     }
 }
