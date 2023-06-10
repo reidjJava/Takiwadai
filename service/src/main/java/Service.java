@@ -1,22 +1,21 @@
 import io.nats.client.Nats;
 import lombok.val;
 
+import java.io.IOException;
+
 public class Service {
 
     private static final String URL = "nats://demo.nats.io:4222";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        val connection = Nats.connect(URL);
         while (true) {
-            try (val connection = Nats.connect(URL)) {
-                val dispatcher = connection.createDispatcher((message) -> {
-                    val receivedMessage = new String(message.getData());
-                    System.out.println("Received message:" + receivedMessage);
-                });
-                dispatcher.subscribe("takiwadai.saveUser");
-                System.out.println("Listening for messages on takiwadai.saveUser");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // TODO Вынести в метод
+            val dispatcher = connection.createDispatcher((message) -> {
+                System.out.println("Received takiwadai.saveUser from: " + new String(message.getData()));
+                connection.publish(message.getReplyTo(), "HI BEACHHHH".getBytes());
+            });
+            dispatcher.subscribe("saveUser");
         }
     }
 }

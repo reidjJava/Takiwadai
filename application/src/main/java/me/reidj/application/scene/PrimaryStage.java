@@ -16,7 +16,6 @@ public record PrimaryStage(Stage stage) {
         stage.sizeToScene();
         stage.setTitle("Takiwadai");
         stage.setResizable(false);
-
         try {
             Image icon = new Image(PathHelper.getResource("/images/compact_logo.png").getPath());
             stage.getIcons().add(icon);

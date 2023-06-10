@@ -1,0 +1,10 @@
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/releases"
+    }
+}
+
+dependencies {
+    implementation 'io.nats:jnats:2.16.0'
+}

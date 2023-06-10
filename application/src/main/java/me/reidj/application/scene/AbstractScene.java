@@ -1,5 +1,6 @@
 package me.reidj.application.scene;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -23,5 +24,10 @@ public abstract class AbstractScene {
             }
         }
         return scene;
+    }
+
+    @FXML
+    void exit() {
+        System.exit(0);
     }
 }

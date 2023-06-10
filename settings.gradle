@@ -1,4 +1,5 @@
 rootProject.name = 'Takiwadai2'
 include 'application'
 include 'service'
+include 'client'
 

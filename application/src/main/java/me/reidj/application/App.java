@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.login.LoginScene;
+import me.reidj.client.client.NatsClient;
 
 public class App extends Application {
 
@@ -17,6 +18,8 @@ public class App extends Application {
         LoginScene loginScene = new LoginScene();
 
         primaryStage.setScene(loginScene.getScene());
+
+        NatsClient.connect();
     }
 
     public static void main(String[] args) {
