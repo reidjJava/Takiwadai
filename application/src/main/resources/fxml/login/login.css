@@ -1,0 +1,15 @@
+.forget-button {
+    -fx-font-family: "Srbija Sans";
+    -fx-font-size: 14px;
+    -fx-text-fill: #a3a3a3;
+}
+
+.forget-button:hover {
+    -fx-text-fill: #2c1a54;
+}
+
+.register {
+    -fx-font-family: "Srbija Sans";
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c1a54;
+}

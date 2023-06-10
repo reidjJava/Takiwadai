@@ -24,7 +24,7 @@ public class PrimaryStage {
         stage.setResizable(false);
 
         try {
-            Image icon = new Image(PathHelper.getResource("/images/logo.png").getPath());
+            Image icon = new Image(PathHelper.getResource("/images/compact_logo.png").getPath());
             stage.getIcons().add(icon);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
