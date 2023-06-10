@@ -8,13 +8,7 @@ import me.reidj.application.util.PathHelper;
 
 import java.io.FileNotFoundException;
 
-public class PrimaryStage {
-
-    private final Stage stage;
-
-    public PrimaryStage(Stage stage) {
-        this.stage = stage;
-    }
+public record PrimaryStage(Stage stage) {
 
     public void setScene(Scene scene) {
         stage.setScene(scene);
@@ -35,9 +29,5 @@ public class PrimaryStage {
 
     public void show() {
         stage.show();
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 }

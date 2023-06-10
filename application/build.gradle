@@ -30,6 +30,8 @@ javafx {
 }
 
 dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
     implementation 'io.nats:jnats:2.16.0'
     implementation 'com.jfoenix:jfoenix:9.0.10'
 }

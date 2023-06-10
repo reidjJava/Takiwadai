@@ -2,11 +2,13 @@ package me.reidj.application;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import lombok.Getter;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.login.LoginScene;
 
 public class App extends Application {
 
+    @Getter
     private PrimaryStage primaryStage;
 
     @Override
@@ -19,9 +21,5 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public PrimaryStage getPrimaryStage() {
-        return primaryStage;
     }
 }
