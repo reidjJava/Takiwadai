@@ -4,5 +4,5 @@ module me.reidj.client {
     requires static lombok;
 
     exports me.reidj.client.protocol;
-    exports me.reidj.client.client;
+    exports me.reidj.client.network;
 }

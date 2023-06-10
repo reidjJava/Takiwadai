@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.login.LoginScene;
-import me.reidj.client.client.Nats;
+import me.reidj.client.network.Nats;
 
 public class App extends Application {
 

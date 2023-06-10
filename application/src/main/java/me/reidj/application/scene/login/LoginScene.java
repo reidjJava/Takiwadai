@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import me.reidj.application.scene.AbstractScene;
-import me.reidj.client.client.Nats;
+import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.LoginUserPackage;
 
 public class LoginScene extends AbstractScene {

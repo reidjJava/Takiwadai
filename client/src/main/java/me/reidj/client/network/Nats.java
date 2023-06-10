@@ -1,4 +1,4 @@
-package me.reidj.client.client;
+package me.reidj.client.network;
 
 import com.google.gson.Gson;
 import io.nats.client.Connection;
