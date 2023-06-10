@@ -13,3 +13,7 @@
     -fx-font-size: 14px;
     -fx-text-fill: #2c1a54;
 }
+
+.register:hover {
+    -fx-text-fill: #a3a3a3;
+}
