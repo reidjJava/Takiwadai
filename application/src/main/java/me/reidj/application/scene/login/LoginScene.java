@@ -20,6 +20,6 @@ public class LoginScene extends AbstractScene {
 
     @FXML
     void goAuth() {
-        Nats.publishAndWaitResponse(LoginUserPackage.class, "saveUser");
+        Nats.publishAndWaitResponse(new LoginUserPackage("", ""), "saveUser");
     }
 }

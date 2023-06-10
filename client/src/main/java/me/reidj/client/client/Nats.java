@@ -32,15 +32,15 @@ public class Nats {
         connection.publish(subject, gson.toJson(data).getBytes());
     }
 
-    public CorePackage publishAndWaitResponse(Class<? extends CorePackage> clazz, String subject) {
-        String json = gson.toJson(clazz);
+    public CorePackage publishAndWaitResponse(CorePackage data, String subject) {
+        String json = gson.toJson(data);
         String response = null;
         try {
             response = new String(connection.request(subject, json.getBytes()).get().getData());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        return gson.fromJson(response, clazz);
+        return gson.fromJson(response, data.getClass());
     }
 
     public void registerHandler(Consumer<Message> consumer, String subject) {
