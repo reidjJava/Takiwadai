@@ -35,7 +35,7 @@ public class App {
         while (true) {
             Nats.registerHandler((message) -> {
                 System.out.println("Received saveUser from: " + new String(message.getData()));
-            }, "saveUser");
+            }, "authUser");
         }
     }
 }

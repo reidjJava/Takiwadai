@@ -7,5 +7,5 @@ import java.util.UUID;
 @Getter
 public abstract class CorePackage {
 
-    private final String id = UUID.randomUUID().toString();
+    public final String id = UUID.randomUUID().toString();
 }
