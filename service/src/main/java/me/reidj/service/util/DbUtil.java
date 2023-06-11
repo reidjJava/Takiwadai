@@ -18,6 +18,7 @@ public class DbUtil {
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
     public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
+    public static final String UPDATE_USER_DATA = "UPDATE users SET name = ?, surname = ?, patronymic = ?, password = ? WHERE id = ?";
 
     private static final String DB_USERNAME = "db.username";
     private static final String DB_PASSWORD = "db.password";

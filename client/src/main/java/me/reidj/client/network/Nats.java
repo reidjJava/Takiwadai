@@ -9,7 +9,6 @@ import lombok.val;
 import me.reidj.client.protocol.CorePackage;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -32,14 +31,14 @@ public class Nats {
     }
 
     public void publish(String subject, CorePackage data) {
-        connection.publish(subject, gson.toJson(data).getBytes(StandardCharsets.UTF_8));
+        connection.publish(subject, gson.toJson(data).getBytes());
     }
 
     public CorePackage publishAndWaitResponse(CorePackage data, String subject) {
         String json = gson.toJson(data);
         String response = null;
         try {
-            response = new String(connection.request(subject, json.getBytes(StandardCharsets.UTF_8)).get().getData());
+            response = new String(connection.request(subject, json.getBytes()).get().getData());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

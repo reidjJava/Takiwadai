@@ -3,10 +3,13 @@ package me.reidj.application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.Setter;
 import me.reidj.application.manager.FileManager;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.login.LoginScene;
+import me.reidj.application.scene.profile.ProfileScene;
 import me.reidj.application.scene.registration.RegistrationScene;
+import me.reidj.application.user.User;
 import me.reidj.client.network.Nats;
 
 import java.io.IOException;
@@ -20,8 +23,11 @@ public class App extends Application {
     private PrimaryStage primaryStage;
     private LoginScene loginScene;
     private RegistrationScene registrationScene;
+    private ProfileScene profileScene;
 
     private FileManager fileManager;
+    @Setter
+    private User user;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -30,6 +36,7 @@ public class App extends Application {
         primaryStage = new PrimaryStage(stage);
         loginScene = new LoginScene();
         registrationScene = new RegistrationScene();
+        profileScene = new ProfileScene();
 
         fileManager = new FileManager();
         fileManager.createFileInAppdataDir(FileManager.FILE_NAME);

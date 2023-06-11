@@ -10,6 +10,7 @@ import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.exception.Errors;
 import me.reidj.application.scene.AbstractScene;
+import me.reidj.application.user.User;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.LoginUserPackage;
 
@@ -19,8 +20,6 @@ public class LoginScene extends AbstractScene {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private Pane root;
     @FXML
     private JFXCheckBox saveDataCheckbox;
 
@@ -56,7 +55,15 @@ public class LoginScene extends AbstractScene {
         if (response.getName() == null || response.getSurname() == null || response.getPatronymic() == null) {
             App.getApp().getPrimaryStage().showAlert(Alert.AlertType.ERROR, "Неверный логин или пароль", "");
         } else {
-            //showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
+            App.getApp().setUser(new User(
+                    response.getUserId(),
+                    response.getName(),
+                    response.getSurname(),
+                    response.getPatronymic(),
+                    response.getEmail(),
+                    response.getPassword()
+            ));
+            App.getApp().getPrimaryStage().showScene(App.getApp().getProfileScene().getScene());
         }
 
         checkboxPressed();

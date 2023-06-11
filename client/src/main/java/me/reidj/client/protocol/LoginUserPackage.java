@@ -14,6 +14,7 @@ public class LoginUserPackage extends CorePackage {
     public final String email;
     public final String password;
 
+    public int userId;
     public String name;
     public String surname;
     public String patronymic;

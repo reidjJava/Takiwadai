@@ -37,12 +37,7 @@ public class RegistrationScene extends AbstractScene {
     }
 
     @FXML
-    void backToLoginScreen() {
-        App.getApp().getPrimaryStage().showScene(App.getApp().getLoginScene().getScene());
-    }
-
-    @FXML
-    void goRegistration() {
+    private void goRegistration() {
         val name = nameField.getText();
         val surname = surnameField.getText();
         val patronymic = patronymicField.getText();

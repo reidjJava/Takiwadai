@@ -5,6 +5,7 @@ import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.LoginUserPackage;
 import me.reidj.client.protocol.RegistrationUserPackage;
+import me.reidj.client.protocol.UpdateUserDataPackage;
 import me.reidj.service.util.DbUtil;
 
 import java.sql.Connection;
@@ -53,6 +54,7 @@ public class App {
                 val resultSet = statement.executeQuery();
 
                 if (resultSet.next()) {
+                    loginPackage.setUserId(resultSet.getInt("id"));
                     loginPackage.setName(resultSet.getString("name"));
                     loginPackage.setSurname(resultSet.getString("surname"));
                     loginPackage.setPatronymic(resultSet.getString("patronymic"));
@@ -94,5 +96,26 @@ public class App {
                 e.printStackTrace();
             }
         }, "registrationUser");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received updateUserData: " + request);
+
+            val updateUserDataPackage = Nats.getGson().fromJson(request, UpdateUserDataPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                var statement = connection.prepareStatement(UPDATE_USER_DATA);
+
+                statement.setString(1, updateUserDataPackage.getName());
+                statement.setString(2, updateUserDataPackage.getSurname());
+                statement.setString(3, updateUserDataPackage.getPatronymic());
+                statement.setString(4, updateUserDataPackage.getPassword());
+                statement.setInt(5, updateUserDataPackage.getUserId());
+                statement.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "updateUserData");
     }
 }

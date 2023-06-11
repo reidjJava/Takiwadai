@@ -9,8 +9,10 @@ module me.reidj.application {
     opens me.reidj.application to javafx.fxml;
     opens me.reidj.application.scene.login to javafx.fxml;
     opens me.reidj.application.scene.registration to javafx.fxml;
+    opens me.reidj.application.scene.profile to javafx.fxml;
     opens me.reidj.application.scene to javafx.fxml;
     exports me.reidj.application.scene.login;
+    exports me.reidj.application.scene.profile;
     exports me.reidj.application.scene.registration;
     exports me.reidj.application.scene;
     exports me.reidj.application;
