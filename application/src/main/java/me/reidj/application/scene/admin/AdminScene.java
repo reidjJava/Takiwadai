@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.misc.StatusType;
@@ -44,6 +45,12 @@ public class AdminScene extends AbstractScene {
     private Button applicationDeleteButton;
     @FXML
     private Button updateStatusApplicationButton;
+    @FXML
+    private AnchorPane reasonPane;
+    @FXML
+    private Button updateStatusWithReason;
+    @FXML
+    private TextField reasonField;
 
     public AdminScene() {
         super("admin/adminScene.fxml");
@@ -96,28 +103,45 @@ public class AdminScene extends AbstractScene {
     private void updateStatusApplication(int id, int creatorId) {
         updateStatusApplicationButton.setOnMouseClicked(event -> {
             val status = statusesComboBox.getValue();
-            val response = (UpdateStatusApplicationPackage) Nats.publishAndWaitResponse(
-                    new UpdateStatusApplicationPackage(id, creatorId, status, null),
-                    "updateStatusApplication"
-            );
-            val user = response.getUser();
-
-            App.getApp().getMailSender().send(
-                    user.email(),
-                    "Статус заявки был обновлён",
-                    "Здравствуйте " + user.name() + "." +
-                            "\n\n" +
-                            "Статус вашей заявки в приложении «Takiwadai» был " +
-                            "изменён: " + status
-            );
-
-            App.getApp().getPrimaryStage().showAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Статус заявки успешно обновлён!",
-                    ""
-            );
-
-            fillTableWithApplications();
+            val has = status.equalsIgnoreCase(StatusType.DENIED.getTitle());
+            if (has) {
+                reasonPane.setVisible(true);
+                updateStatusWithReason.setOnMouseClicked(clicked -> sendingStatusUpdatePackage(id, creatorId));
+                return;
+            }
+            sendingStatusUpdatePackage(id, creatorId);
         });
+    }
+
+    private void sendingStatusUpdatePackage(int id, int creatorId) {
+        val status = statusesComboBox.getValue();
+        val has = status.equalsIgnoreCase(StatusType.DENIED.getTitle());
+        val response = (UpdateStatusApplicationPackage) Nats.publishAndWaitResponse(
+                new UpdateStatusApplicationPackage(id, creatorId, status, has ? reasonField.getText() : null),
+                "updateStatusApplication"
+        );
+        val user = response.getUser();
+
+        App.getApp().getMailSender().send(
+                user.email(),
+                "Статус заявки был обновлён",
+                "Здравствуйте " + user.name() + "." +
+                        "\n\n" +
+                        "Статус вашей заявки в приложении «Takiwadai» был " +
+                        "изменён: " + status
+        );
+
+        App.getApp().getPrimaryStage().showAlert(
+                Alert.AlertType.INFORMATION,
+                "Статус заявки успешно обновлён!",
+                ""
+        );
+
+        fillTableWithApplications();
+    }
+
+    @FXML
+    void closeReasonPane() {
+        reasonPane.setVisible(false);
     }
 }
