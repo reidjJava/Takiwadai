@@ -38,7 +38,7 @@ public class RegistrationScene extends AbstractScene {
 
     @FXML
     void backToLoginScreen() {
-
+        App.getApp().getPrimaryStage().showScene(App.getApp().getLoginScene().getScene());
     }
 
     @FXML
@@ -92,9 +92,7 @@ public class RegistrationScene extends AbstractScene {
     private class RedirectTask extends TimerTask {
         @Override
         public void run() {
-            Platform.runLater(() -> {
-
-            });
+            Platform.runLater(RegistrationScene.this::backToLoginScreen);
             timer.cancel();
         }
     }

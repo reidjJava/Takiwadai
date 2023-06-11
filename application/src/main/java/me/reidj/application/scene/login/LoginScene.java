@@ -49,6 +49,6 @@ public class LoginScene extends AbstractScene {
 
     @FXML
     void openRegistrationOverlay() {
-        showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
+        App.getApp().getPrimaryStage().showScene(App.getApp().getRegistrationScene().getScene());
     }
 }

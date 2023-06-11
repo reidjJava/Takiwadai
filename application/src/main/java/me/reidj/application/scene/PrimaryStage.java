@@ -1,5 +1,6 @@
 package me.reidj.application.scene;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ public record PrimaryStage(Stage stage) {
     public void setScene(Scene scene) {
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setOnHidden(event -> Platform.exit());
         stage.sizeToScene();
         stage.setTitle("Takiwadai");
         stage.setResizable(false);
@@ -23,6 +25,11 @@ public record PrimaryStage(Stage stage) {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        show();
+    }
+
+    public void showScene(Scene scene) {
+        stage.setScene(scene);
         show();
     }
 
