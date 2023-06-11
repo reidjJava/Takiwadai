@@ -2,6 +2,7 @@ package me.reidj.service;
 
 import lombok.val;
 import me.reidj.client.data.LogData;
+import me.reidj.client.data.UserDto;
 import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.*;
@@ -188,6 +189,7 @@ public class App {
                     getAllApplicationsPackage.getLogDataSet().add(
                             new LogData(
                                     resultSet.getInt("applicationId"),
+                                    resultSet.getInt("id"),
                                     resultSet.getString("name") + " "
                                             + resultSet.getString("surname") + " "
                                             + resultSet.getString("patronymic"),
@@ -221,6 +223,39 @@ public class App {
                 throw new RuntimeException(e);
             }
         }, "applicationDelete");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received updateStatusApplication: " + request);
+
+            val updateStatusApplicationPackage = Nats.getGson().fromJson(request, UpdateStatusApplicationPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                var statement = connection.prepareStatement(UPDATE_APPLICATION);
+                statement.setString(1, updateStatusApplicationPackage.getStatus());
+                statement.setString(2, updateStatusApplicationPackage.getReason());
+                statement.setInt(3, updateStatusApplicationPackage.getApplicationId());
+                statement.executeUpdate();
+
+                statement = connection.prepareStatement(SELECT_APPLICATION_CREATOR_BY_ID);
+                statement.setInt(1, updateStatusApplicationPackage.getCreatorId());
+
+                val resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    updateStatusApplicationPackage.setUser(
+                            new UserDto(
+                                    resultSet.getString("name"),
+                                    resultSet.getString("email")
+                            )
+                    );
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Nats.publish(message.getReplyTo(), updateStatusApplicationPackage);
+        }, "updateStatusApplication");
     }
 
     private static String passwordGenerator() {

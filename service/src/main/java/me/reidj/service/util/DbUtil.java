@@ -17,10 +17,12 @@ public class DbUtil {
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
     public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String SELECT_ALL_APPLICATIONS = "SELECT * FROM users JOIN applications ON users.id = applications.userId";
+    public static final String SELECT_APPLICATION_CREATOR_BY_ID = "SELECT * FROM users JOIN applications ON users.id = applications.userId WHERE id = ?";
     public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
     public static final String CREATE_APPLICATION = "INSERT INTO applications (userId, description, date, time, category, status, reason) VALUES(?, ?, ?, ?, ?, ?, ?);";
     public static final String UPDATE_USER_DATA = "UPDATE users SET name = ?, surname = ?, patronymic = ?, password = ? WHERE id = ?";
     public static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";
+    public static final String UPDATE_APPLICATION = "UPDATE applications SET status = ?, reason = ? WHERE applicationId = ?";
     public static final String DELETE_APPLICATION = "DELETE FROM applications WHERE applicationId = ?";
 
     private static final String DB_USERNAME = "db.username";

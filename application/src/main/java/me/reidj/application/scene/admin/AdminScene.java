@@ -12,6 +12,7 @@ import me.reidj.client.data.LogData;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.ApplicationDeletePackage;
 import me.reidj.client.protocol.GetAllApplicationsPackage;
+import me.reidj.client.protocol.UpdateStatusApplicationPackage;
 
 import java.util.Arrays;
 
@@ -41,6 +42,8 @@ public class AdminScene extends AbstractScene {
     private JFXComboBox<String> statusesComboBox;
     @FXML
     private Button applicationDeleteButton;
+    @FXML
+    private Button updateStatusApplicationButton;
 
     public AdminScene() {
         super("admin/adminScene.fxml");
@@ -63,8 +66,8 @@ public class AdminScene extends AbstractScene {
     }
 
     private void fillTableWithApplications() {
-        val response = (GetAllApplicationsPackage) Nats.publishAndWaitResponse(new GetAllApplicationsPackage(), "getAllApplications");
         logsTableView.getItems().clear();
+        val response = (GetAllApplicationsPackage) Nats.publishAndWaitResponse(new GetAllApplicationsPackage(), "getAllApplications");
         logsTableView.getItems().addAll(response.getLogDataSet());
     }
 
@@ -75,6 +78,7 @@ public class AdminScene extends AbstractScene {
             }
             val id = newValue.getId();
             removeApplication(id);
+            updateStatusApplication(id, newValue.creatorId);
         });
     }
 
@@ -85,6 +89,34 @@ public class AdminScene extends AbstractScene {
                     Alert.AlertType.INFORMATION,
                     "Заявка удалена успешно!", ""
             );
+            fillTableWithApplications();
+        });
+    }
+
+    private void updateStatusApplication(int id, int creatorId) {
+        updateStatusApplicationButton.setOnMouseClicked(event -> {
+            val status = statusesComboBox.getValue();
+            val response = (UpdateStatusApplicationPackage) Nats.publishAndWaitResponse(
+                    new UpdateStatusApplicationPackage(id, creatorId, status, null),
+                    "updateStatusApplication"
+            );
+            val user = response.getUser();
+
+            App.getApp().getMailSender().send(
+                    user.email(),
+                    "Статус заявки был обновлён",
+                    "Здравствуйте " + user.name() + "." +
+                            "\n\n" +
+                            "Статус вашей заявки в приложении «Takiwadai» был " +
+                            "изменён: " + status
+            );
+
+            App.getApp().getPrimaryStage().showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Статус заявки успешно обновлён!",
+                    ""
+            );
+
             fillTableWithApplications();
         });
     }

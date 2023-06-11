@@ -8,6 +8,7 @@ import lombok.Getter;
 public class LogData {
 
     public final int id;
+    public final int creatorId;
     public final String creator;
     public final String dateCreation;
     public final String category;
@@ -16,7 +17,7 @@ public class LogData {
 
     public final String reason;
 
-    public LogData(String creator, String dateCreation, String category, String description, String status, String reason) {
-        this(0, creator, dateCreation, category, description, status, reason);
+    public LogData(String creator, int creatorId, String dateCreation, String category, String description, String status, String reason) {
+        this(0, creatorId, creator, dateCreation, category, description, status, reason);
     }
 }

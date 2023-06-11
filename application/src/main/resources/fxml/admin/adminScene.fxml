@@ -21,7 +21,7 @@
         <Label layoutX="436.0" layoutY="123.0" styleClass="big-text" text="Заявки" textFill="#545454" />
         <ImageView fitHeight="63.0" fitWidth="70.0" layoutX="570.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="exit-button" x="580.0" />
         <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="508.0" layoutY="25.0" onMouseClicked="#backToLoginScreen" pickOnBounds="true" preserveRatio="true" styleClass="move-button" x="580.0" />
-        <Button layoutX="651.0" layoutY="483.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Обновить статус">
+        <Button fx:id="updateStatusApplicationButton" layoutX="651.0" layoutY="483.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Обновить статус">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
