@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.exception.Errors;
@@ -17,6 +18,8 @@ public class LoginScene extends AbstractScene {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Pane root;
 
     public LoginScene() {
         super("login/loginScene.fxml");
@@ -39,7 +42,7 @@ public class LoginScene extends AbstractScene {
         if (response.getName() == null || response.getSurname() == null || response.getPatronymic() == null) {
             App.getApp().getPrimaryStage().showAlert(Alert.AlertType.ERROR, "Неверный логин или пароль", "");
         } else {
-            // Авторизируемся
+            showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
         }
     }
 }

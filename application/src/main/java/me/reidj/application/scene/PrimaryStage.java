@@ -23,7 +23,6 @@ public record PrimaryStage(Stage stage) {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         show();
     }
 

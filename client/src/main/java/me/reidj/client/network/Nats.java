@@ -3,6 +3,7 @@ package me.reidj.client.network;
 import com.google.gson.Gson;
 import io.nats.client.Connection;
 import io.nats.client.Message;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import me.reidj.client.protocol.CorePackage;
@@ -18,6 +19,7 @@ public class Nats {
 
     private Connection connection;
 
+    @Getter
     private final Gson gson = new Gson();
 
     public void connect() {

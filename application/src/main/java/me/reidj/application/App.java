@@ -5,21 +5,26 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.login.LoginScene;
+import me.reidj.application.scene.registration.RegistrationScene;
 import me.reidj.client.network.Nats;
 
+@Getter
 public class App extends Application {
 
+    @Getter
     private static App app;
 
-    @Getter
     private PrimaryStage primaryStage;
+    private LoginScene loginScene;
+    private RegistrationScene registrationScene;
 
     @Override
     public void start(Stage stage) {
         app = this;
 
         primaryStage = new PrimaryStage(stage);
-        LoginScene loginScene = new LoginScene();
+        loginScene = new LoginScene();
+        registrationScene = new RegistrationScene();
 
         primaryStage.setScene(loginScene.getScene());
 
@@ -28,9 +33,5 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public static App getApp() {
-        return app;
     }
 }

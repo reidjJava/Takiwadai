@@ -1,6 +1,9 @@
 package me.reidj.service;
 
+import lombok.val;
 import me.reidj.client.network.Nats;
+import me.reidj.client.protocol.LoginUserPackage;
+import me.reidj.service.util.DbUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,10 +35,31 @@ public class App {
             e.printStackTrace();
         }
 
-        while (true) {
-            Nats.registerHandler((message) -> {
-                System.out.println("Received saveUser from: " + new String(message.getData()));
-            }, "authUser");
-        }
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received authUser: " + request);
+
+            val loginPackage = Nats.getGson().fromJson(request, LoginUserPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(SELECT_USER_BY_EMAIL_AND_PASSWORD);
+
+                statement.setString(1, loginPackage.getEmail());
+                statement.setString(2, loginPackage.getPassword());
+
+                val resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    loginPackage.setName(resultSet.getString("name"));
+                    loginPackage.setSurname(resultSet.getString("surname"));
+                    loginPackage.setPatronymic(resultSet.getString("patronymic"));
+                }
+
+                Nats.publish(message.getReplyTo(), loginPackage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "authUser");
     }
 }
