@@ -45,8 +45,8 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Label layoutX="88.0" layoutY="449.0" text="Нет аккаунта?" textFill="#a3a3a3" />
-                <Label layoutX="198.0" layoutY="449.0" styleClass="register" text="Зарегистрироваться" textFill="#2c1a54" />
+                <Label layoutX="88.0" layoutY="449.0" styleClass="small-text" text="Нет аккаунта?" textFill="#a3a3a3" />
+                <Label layoutX="198.0" layoutY="449.0" onMouseClicked="#openRegistrationOverlay" styleClass="register" text="Зарегистрироваться" textFill="#2c1a54" />
                 <ImageView fitHeight="63.0" fitWidth="70.0" layoutX="339.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true" styleClass="exit-button" />
                 <JFXCheckBox checkedColor="#2c1a54" layoutX="50.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Сохранить данные" unCheckedColor="#2c1a54" />
                 <Label layoutX="232.0" layoutY="429.0" styleClass="forget-button" text="Забыли пароль?" textFill="#0d0808">

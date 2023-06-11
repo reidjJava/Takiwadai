@@ -27,22 +27,28 @@ public class LoginScene extends AbstractScene {
 
     @FXML
     void goAuth() {
-        val emailText = emailField.getText();
-        val passwordText = passwordField.getText();
+        val email = emailField.getText();
+        val password = passwordField.getText();
 
-        if (Errors.FIELD_EMPTY.check(emailText, passwordText))
+        if (Errors.FIELD_EMPTY.check(email, password))
             return;
-        if (Errors.EMAIL.check(emailText))
+        if (Errors.EMAIL.check(email))
             return;
-        if (Errors.PASSWORD_IS_SHORT.check(passwordText))
+        if (Errors.PASSWORD_IS_SHORT.check(password))
             return;
 
-        val response = (LoginUserPackage) Nats.publishAndWaitResponse(new LoginUserPackage(emailText, passwordText), "authUser");
+        val response = (LoginUserPackage) Nats.publishAndWaitResponse(new LoginUserPackage(email, password), "authUser");
 
         if (response.getName() == null || response.getSurname() == null || response.getPatronymic() == null) {
             App.getApp().getPrimaryStage().showAlert(Alert.AlertType.ERROR, "Неверный логин или пароль", "");
         } else {
             showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
         }
+    }
+
+
+    @FXML
+    void openRegistrationOverlay() {
+        showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
     }
 }

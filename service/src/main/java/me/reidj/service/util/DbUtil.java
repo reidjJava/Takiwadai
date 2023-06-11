@@ -16,6 +16,8 @@ public class DbUtil {
     public static final String CREATE_TABLE_APPLICATIONS = "CREATE TABLE IF NOT EXISTS applications (id INT AUTO_INCREMENT, userId INT, name TEXT, surname TEXT, secondName TEXT, email TEXT, description TEXT, date DATE, time TIME, category TEXT, status TEXT, reason TEXT NULL, PRIMARY KEY (id), FOREIGN KEY(userId) REFERENCES users (id));";
     public static final String CREATE_TABLE_LIST_CHANGES = "CREATE TABLE IF NOT EXISTS list_changes (id INT AUTO_INCREMENT, dateChange TIMESTAMP, userId INT, description TEXT, PRIMARY KEY (id), FOREIGN KEY(userId) REFERENCES users (id))";
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
+    public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
+    public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
 
     private static final String DB_USERNAME = "db.username";
     private static final String DB_PASSWORD = "db.password";

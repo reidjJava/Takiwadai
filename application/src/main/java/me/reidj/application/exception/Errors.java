@@ -1,8 +1,10 @@
 package me.reidj.application.exception;
 
 import javafx.scene.control.Alert;
+import lombok.AllArgsConstructor;
 import me.reidj.application.App;
 
+@AllArgsConstructor
 public enum Errors implements Solid {
 
 	EMAIL(new EmailIsIncorrect()),
@@ -12,7 +14,6 @@ public enum Errors implements Solid {
 	INCORRECT_SYMBOL(new SymbolIsIncorrect());
 
 	private final Solid solid;
-
 
 	@Override
 	public boolean check(String... strings) {
@@ -40,9 +41,5 @@ public enum Errors implements Solid {
 	@Override
 	public String[] getMessage() {
 		return solid.getMessage();
-	}
-
-	Errors(Solid solid) {
-		this.solid = solid;
 	}
 }
