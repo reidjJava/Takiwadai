@@ -1,5 +1,6 @@
 package me.reidj.application.scene.login;
 
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -20,13 +21,26 @@ public class LoginScene extends AbstractScene {
     private PasswordField passwordField;
     @FXML
     private Pane root;
+    @FXML
+    private JFXCheckBox saveDataCheckbox;
 
     public LoginScene() {
         super("login/loginScene.fxml");
     }
 
     @FXML
-    void goAuth() {
+    private void initialize() {
+        val data = Nats.getGson().fromJson(new String(App.getApp().getFileManager().onRead()), String.class);
+        if (data != null) {
+            val pair = data.split(":");
+            emailField.setText(pair[0]);
+            passwordField.setText(pair[1]);
+            saveDataCheckbox.fire();
+        }
+    }
+
+    @FXML
+    private void goAuth() {
         val email = emailField.getText();
         val password = passwordField.getText();
 
@@ -42,13 +56,26 @@ public class LoginScene extends AbstractScene {
         if (response.getName() == null || response.getSurname() == null || response.getPatronymic() == null) {
             App.getApp().getPrimaryStage().showAlert(Alert.AlertType.ERROR, "Неверный логин или пароль", "");
         } else {
-            showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
+            //showOverlay(root, App.getApp().getRegistrationScene().getScene().getRoot());
         }
+
+        checkboxPressed();
     }
 
-
     @FXML
-    void openRegistrationOverlay() {
+    private void openRegistrationOverlay() {
         App.getApp().getPrimaryStage().showScene(App.getApp().getRegistrationScene().getScene());
+    }
+
+    private void checkboxPressed() {
+        if (saveDataCheckbox.isSelected()) {
+            val email = emailField.getText();
+            val password = passwordField.getText();
+
+            if (Errors.FIELD_EMPTY.check(email, password))
+                return;
+
+            App.getApp().getFileManager().onWrite(Nats.getGson().toJson(email + ":" + password).getBytes());
+        }
     }
 }

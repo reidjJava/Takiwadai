@@ -3,6 +3,7 @@ module me.reidj.application {
     requires javafx.fxml;
     requires com.jfoenix;
     requires me.reidj.client;
+    requires com.google.gson;
     requires static lombok;
 
     opens me.reidj.application to javafx.fxml;
