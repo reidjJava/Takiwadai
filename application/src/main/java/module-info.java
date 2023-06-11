@@ -15,12 +15,14 @@ module me.reidj.application {
     opens me.reidj.application.scene.forgotten_password to javafx.fxml;
     opens me.reidj.application.scene.application to javafx.fxml;
     opens me.reidj.application.scene.admin to javafx.fxml;
+    opens me.reidj.application.scene.log to javafx.fxml;
     opens me.reidj.application.scene to javafx.fxml;
     exports me.reidj.application.scene.login;
     exports me.reidj.application.scene.profile;
     exports me.reidj.application.scene.registration;
     exports me.reidj.application.scene.forgotten_password;
     exports me.reidj.application.scene.application;
+    exports me.reidj.application.scene.log;
     exports me.reidj.application.scene.admin;
     exports me.reidj.application.scene;
     exports me.reidj.application;

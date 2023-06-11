@@ -256,6 +256,37 @@ public class App {
             }
             Nats.publish(message.getReplyTo(), updateStatusApplicationPackage);
         }, "updateStatusApplication");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received getUserApplication: " + request);
+
+            val userApplicationPackage = Nats.getGson().fromJson(request, GetUserApplicationPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(SELECT_APPLICATION_CREATOR_BY_ID);
+
+                statement.setInt(1, userApplicationPackage.getUserId());
+
+                val resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    userApplicationPackage.getLogDataSet().add(
+                            new LogData(
+                                   resultSet.getString("date") + " " + resultSet.getString("time"),
+                                   resultSet.getString("category"),
+                                   resultSet.getString("description"),
+                                   resultSet.getString("status"),
+                                   resultSet.getString("reason")
+                            )
+                    );
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Nats.publish(message.getReplyTo(), userApplicationPackage);
+        }, "getUserApplication");
     }
 
     private static String passwordGenerator() {

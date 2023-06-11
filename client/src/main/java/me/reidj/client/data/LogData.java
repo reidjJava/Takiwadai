@@ -20,4 +20,8 @@ public class LogData {
     public LogData(String creator, int creatorId, String dateCreation, String category, String description, String status, String reason) {
         this(0, creatorId, creator, dateCreation, category, description, status, reason);
     }
+
+    public LogData(String dateCreation, String category, String description, String status, String reason) {
+        this(0, 0, null, dateCreation, category, description, status, reason);
+    }
 }

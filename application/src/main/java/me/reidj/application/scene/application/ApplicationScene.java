@@ -44,7 +44,6 @@ public class ApplicationScene extends AbstractScene {
         });
     }
 
-
     @FXML
     private void createApplication() {
         val customCategory = customCategoryField.getText();
@@ -72,5 +71,10 @@ public class ApplicationScene extends AbstractScene {
     @FXML
     private void backToProfileOverlay() {
         App.getApp().getPrimaryStage().showScene(App.getApp().getProfileScene().getScene());
+    }
+
+    @FXML
+    void openLogOverlay() {
+        App.getApp().getPrimaryStage().showScene(App.getApp().getLogScene().getScene());
     }
 }

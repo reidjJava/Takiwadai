@@ -30,7 +30,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="349.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="log-button" />
+            <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="349.0" layoutY="32.0" onMouseClicked="#openLogOverlay" pickOnBounds="true" preserveRatio="true" styleClass="log-button" />
             <TextField fx:id="customCategoryField" layoutX="60.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="Введите категорию" visible="false" />
          </children>
       </Pane>
