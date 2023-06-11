@@ -1,12 +1,16 @@
 package me.reidj.service;
 
 import lombok.val;
+import me.reidj.client.data.LogData;
 import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.*;
 import me.reidj.service.util.DbUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -19,7 +23,7 @@ public class App {
         connect();
 
         try (Connection connection = getDataSource().getConnection()) {
-            Statement statement = connection.createStatement();
+            val statement = connection.createStatement();
             Arrays.asList(
                     CREATE_TABLE_USERS,
                     CREATE_TABLE_LIST_CHANGES,
@@ -102,7 +106,7 @@ public class App {
             val updateUserDataPackage = Nats.getGson().fromJson(request, UpdateUserDataPackage.class);
 
             try (val connection = DbUtil.getDataSource().getConnection()) {
-                var statement = connection.prepareStatement(UPDATE_USER_DATA);
+                val statement = connection.prepareStatement(UPDATE_USER_DATA);
 
                 statement.setString(1, updateUserDataPackage.getName());
                 statement.setString(2, updateUserDataPackage.getSurname());
@@ -155,7 +159,7 @@ public class App {
             val createApplicationPackage = Nats.getGson().fromJson(request, CreateApplicationPackage.class);
 
             try (val connection = DbUtil.getDataSource().getConnection()) {
-                var statement = connection.prepareStatement(CREATE_APPLICATION);
+                val statement = connection.prepareStatement(CREATE_APPLICATION);
 
                 statement.setInt(1, createApplicationPackage.getUserId());
                 statement.setString(2, createApplicationPackage.getDescription());
@@ -169,6 +173,54 @@ public class App {
                 e.printStackTrace();
             }
         }, "createApplication");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received getAllApplications: " + request);
+
+            val getAllApplicationsPackage = Nats.getGson().fromJson(request, GetAllApplicationsPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(SELECT_ALL_APPLICATIONS);
+                val resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    getAllApplicationsPackage.getLogDataSet().add(
+                            new LogData(
+                                    resultSet.getInt("applicationId"),
+                                    resultSet.getString("name") + " "
+                                            + resultSet.getString("surname") + " "
+                                            + resultSet.getString("patronymic"),
+                                    resultSet.getString("date") + " "
+                                            + resultSet.getString("time"),
+                                    resultSet.getString("category"),
+                                    resultSet.getString("description"),
+                                    resultSet.getString("status"),
+                                    resultSet.getString("reason")
+                            )
+                    );
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Nats.publish(message.getReplyTo(), getAllApplicationsPackage);
+        }, "getAllApplications");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received applicationDelete: " + request);
+
+            val applicationDeletePackage = Nats.getGson().fromJson(request, ApplicationDeletePackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(DELETE_APPLICATION);
+                statement.setInt(1, applicationDeletePackage.getApplicationId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }, "applicationDelete");
     }
 
     private static String passwordGenerator() {

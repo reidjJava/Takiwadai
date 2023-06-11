@@ -39,7 +39,7 @@
             <TextField fx:id="surnameField" layoutX="50.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Введите Фамилию" styleClass="text-field" />
             <PasswordField fx:id="passwordField" layoutX="50.0" layoutY="357.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Введите пароль" />
             <PasswordField fx:id="confirmPasswordField" layoutX="50.0" layoutY="410.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Подтвердите пароль" />
-            <Button layoutX="50.0" layoutY="460.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goRegistration" prefHeight="50.0" prefWidth="300.0" styleClass="login-button" text="Зарегистрироваться">
+            <Button layoutX="50.0" layoutY="460.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goRegistration" prefHeight="50.0" prefWidth="300.0" styleClass="button" text="Зарегистрироваться">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

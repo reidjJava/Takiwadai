@@ -21,6 +21,8 @@ public class LoginScene extends AbstractScene {
     private PasswordField passwordField;
     @FXML
     private JFXCheckBox saveDataCheckbox;
+    @FXML
+    private JFXCheckBox loginAsAdmin;
 
     public LoginScene() {
         super("login/loginScene.fxml");
@@ -62,7 +64,11 @@ public class LoginScene extends AbstractScene {
                     response.getEmail(),
                     response.getPassword()
             ));
-            App.getApp().getPrimaryStage().showScene(App.getApp().getProfileScene().getScene());
+            if (loginAsAdmin.isSelected()) {
+                App.getApp().getPrimaryStage().showScene(App.getApp().getAdminScene().getScene());
+            } else {
+                App.getApp().getPrimaryStage().showScene(App.getApp().getProfileScene().getScene());
+            }
         }
 
         checkboxPressed();

@@ -40,7 +40,7 @@
                 <Label layoutX="36.0" layoutY="124.0" styleClass="small-text" text="Войдите, чтобы продолжить" textFill="#a3a3a3" />
                 <PasswordField fx:id="passwordField" layoutX="50.0" layoutY="278.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Пароль" />
                 <TextField fx:id="emailField" layoutX="50.0" layoutY="227.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Электронный адрес" styleClass="text-field" />
-                <Button layoutX="50.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goAuth" prefHeight="50.0" prefWidth="300.0" styleClass="login-button" text="Авторизоваться">
+                <Button layoutX="50.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goAuth" prefHeight="50.0" prefWidth="300.0" styleClass="button" text="Авторизоваться">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -54,7 +54,7 @@
                         <Font size="10.0" />
                     </font>
                 </Label>
-                <JFXCheckBox checkedColor="#2c1a54" layoutX="224.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="128.0" text="Войти как админ" unCheckedColor="#2c1a54" />
+                <JFXCheckBox fx:id="loginAsAdmin" checkedColor="#2c1a54" layoutX="224.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="128.0" text="Войти как админ" unCheckedColor="#2c1a54" />
             </children>
         </Pane>
     </children>

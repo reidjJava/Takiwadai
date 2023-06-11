@@ -25,7 +25,7 @@
             <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="321.0" layoutY="24.0" onMouseClicked="#backToProfileOverlay" pickOnBounds="true" preserveRatio="true" styleClass="move-button" />
             <TextArea fx:id="descriptionTextArea" layoutX="60.0" layoutY="245.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" promptText="Описание неисправности" />
             <JFXComboBox fx:id="categoryComboBox" focusColor="#3f2679" layoutX="60.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="Категория" unFocusColor="#2c1a54" />
-            <Button fx:id="createApplicationButton" layoutX="60.0" layoutY="461.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#createApplication" prefHeight="50.0" prefWidth="300.0" styleClass="login-button" text="Отправить">
+            <Button fx:id="createApplicationButton" layoutX="60.0" layoutY="461.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#createApplication" prefHeight="50.0" prefWidth="300.0" styleClass="button" text="Отправить">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

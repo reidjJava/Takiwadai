@@ -7,4 +7,5 @@ module me.reidj.client {
     exports me.reidj.client.network;
     exports me.reidj.client.exception;
     exports me.reidj.client.util;
+    exports me.reidj.client.data;
 }
