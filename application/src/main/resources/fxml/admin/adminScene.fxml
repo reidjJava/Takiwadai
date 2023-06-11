@@ -59,7 +59,7 @@
             <TextField fx:id="reasonField" layoutX="302.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="Введите причину отказа" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="658.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="log-button" x="580.0" />
+      <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="658.0" layoutY="32.0" onMouseClicked="#openChangelogOverlay" pickOnBounds="true" preserveRatio="true" styleClass="log-button" x="580.0" />
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #2c1a54;">
          <children>
             <ImageView fitHeight="103.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">

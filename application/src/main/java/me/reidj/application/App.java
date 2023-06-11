@@ -8,6 +8,7 @@ import me.reidj.application.manager.FileManager;
 import me.reidj.application.scene.PrimaryStage;
 import me.reidj.application.scene.admin.AdminScene;
 import me.reidj.application.scene.application.ApplicationScene;
+import me.reidj.application.scene.changelog.ChangelogScene;
 import me.reidj.application.scene.forgotten_password.ForgottenPasswordScene;
 import me.reidj.application.scene.log.LogScene;
 import me.reidj.application.scene.login.LoginScene;
@@ -33,6 +34,7 @@ public class App extends Application {
     private ApplicationScene applicationScene;
     private AdminScene adminScene;
     private LogScene logScene;
+    private ChangelogScene changelogScene;
 
     private FileManager fileManager;
     private MailSender mailSender;
@@ -51,6 +53,7 @@ public class App extends Application {
         applicationScene = new ApplicationScene();
         adminScene = new AdminScene();
         logScene = new LogScene();
+        changelogScene = new ChangelogScene();
 
         mailSender = new MailSender();
         fileManager = new FileManager();

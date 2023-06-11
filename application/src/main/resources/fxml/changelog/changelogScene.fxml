@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.reidj.application.scene.changelog.ChangelogScene">
+   <stylesheets>
+      <URL value="@../../styles/index.css" />
+   </stylesheets>
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="442.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" styleClass="full-logo" />
+      <Label layoutX="443.0" layoutY="128.0" styleClass="big-text" text="Журнал" textFill="#545454" />
+      <TableView fx:id="logsTable" layoutX="406.0" layoutY="178.0" prefHeight="361.0" prefWidth="586.0">
+         <columns>
+            <TableColumn fx:id="dateChangeColumn" prefWidth="175.0" text="Дата изменения" />
+            <TableColumn fx:id="changesColumn" prefWidth="184.0" text="Изменил" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="226.99998474121094" text="Описание" />
+         </columns>
+      </TableView>
+      <ImageView fitHeight="63.0" fitWidth="70.0" layoutX="946.0" layoutY="20.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true" styleClass="exit-button" />
+      <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="935.0" layoutY="34.0" onMouseClicked="#backToLoginScreen" pickOnBounds="true" preserveRatio="true" styleClass="move-button" />
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #2c1a54;">
+         <children>
+            <ImageView fitHeight="103.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label styleClass="small-text" text="Добро Пожаловать в" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Label styleClass="big-text" text="Takiwadai" textFill="WHITE" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

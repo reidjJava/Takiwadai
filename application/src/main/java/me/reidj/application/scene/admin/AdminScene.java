@@ -141,7 +141,12 @@ public class AdminScene extends AbstractScene {
     }
 
     @FXML
-    void closeReasonPane() {
+    private void closeReasonPane() {
         reasonPane.setVisible(false);
+    }
+
+    @FXML
+    private void openChangelogOverlay() {
+        App.getApp().getPrimaryStage().showScene(App.getApp().getChangelogScene().getScene());
     }
 }
