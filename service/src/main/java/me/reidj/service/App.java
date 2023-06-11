@@ -3,15 +3,10 @@ package me.reidj.service;
 import lombok.val;
 import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
-import me.reidj.client.protocol.GenerateNewPasswordPackage;
-import me.reidj.client.protocol.LoginUserPackage;
-import me.reidj.client.protocol.RegistrationUserPackage;
-import me.reidj.client.protocol.UpdateUserDataPackage;
+import me.reidj.client.protocol.*;
 import me.reidj.service.util.DbUtil;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -151,6 +146,29 @@ public class App {
                 e.printStackTrace();
             }
         }, "generateNewPassword");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received createApplication: " + request);
+
+            val createApplicationPackage = Nats.getGson().fromJson(request, CreateApplicationPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                var statement = connection.prepareStatement(CREATE_APPLICATION);
+
+                statement.setInt(1, createApplicationPackage.getUserId());
+                statement.setString(2, createApplicationPackage.getDescription());
+                statement.setDate(3, new Date(System.currentTimeMillis()));
+                statement.setTime(4, new Time(System.currentTimeMillis()));
+                statement.setString(5, createApplicationPackage.getCategory());
+                statement.setString(6, createApplicationPackage.getStatus());
+                statement.setString(7, null);
+                statement.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "createApplication");
     }
 
     private static String passwordGenerator() {

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.reidj.application.manager.FileManager;
 import me.reidj.application.scene.PrimaryStage;
+import me.reidj.application.scene.application.ApplicationScene;
 import me.reidj.application.scene.forgotten_password.ForgottenPasswordScene;
 import me.reidj.application.scene.login.LoginScene;
 import me.reidj.application.scene.profile.ProfileScene;
@@ -27,6 +28,7 @@ public class App extends Application {
     private RegistrationScene registrationScene;
     private ProfileScene profileScene;
     private ForgottenPasswordScene forgottenPasswordScene;
+    private ApplicationScene applicationScene;
 
     private FileManager fileManager;
     private MailSender mailSender;
@@ -42,6 +44,7 @@ public class App extends Application {
         registrationScene = new RegistrationScene();
         profileScene = new ProfileScene();
         forgottenPasswordScene = new ForgottenPasswordScene();
+        applicationScene = new ApplicationScene();
 
         mailSender = new MailSender();
         fileManager = new FileManager();

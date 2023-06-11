@@ -59,4 +59,9 @@ public class ProfileScene extends AbstractScene {
 
         App.getApp().getPrimaryStage().showAlert(Alert.AlertType.INFORMATION, "Данные успешно обновлены.", "");
     }
+
+    @FXML
+    void openApplicationOverlay() {
+        App.getApp().getPrimaryStage().showScene(App.getApp().getApplicationScene().getScene());
+    }
 }
