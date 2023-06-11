@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 import me.reidj.application.manager.FileManager;
 import me.reidj.application.scene.PrimaryStage;
+import me.reidj.application.scene.forgotten_password.ForgottenPasswordScene;
 import me.reidj.application.scene.login.LoginScene;
 import me.reidj.application.scene.profile.ProfileScene;
 import me.reidj.application.scene.registration.RegistrationScene;
+import me.reidj.application.service.MailSender;
 import me.reidj.application.user.User;
 import me.reidj.client.network.Nats;
 
@@ -24,8 +26,10 @@ public class App extends Application {
     private LoginScene loginScene;
     private RegistrationScene registrationScene;
     private ProfileScene profileScene;
+    private ForgottenPasswordScene forgottenPasswordScene;
 
     private FileManager fileManager;
+    private MailSender mailSender;
     @Setter
     private User user;
 
@@ -37,7 +41,9 @@ public class App extends Application {
         loginScene = new LoginScene();
         registrationScene = new RegistrationScene();
         profileScene = new ProfileScene();
+        forgottenPasswordScene = new ForgottenPasswordScene();
 
+        mailSender = new MailSender();
         fileManager = new FileManager();
         fileManager.createFileInAppdataDir(FileManager.FILE_NAME);
 

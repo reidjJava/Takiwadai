@@ -29,5 +29,7 @@ javafx {
 dependencies {
     implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'javax.activation:activation:1.1'
     implementation project(':client')
 }

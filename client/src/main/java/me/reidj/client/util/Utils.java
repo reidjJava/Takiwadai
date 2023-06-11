@@ -1,12 +1,10 @@
-package me.reidj.service.util;
+package me.reidj.client.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class Utils {
-
-    public static final String RESOURCES = "service/src/main/resources/";
 
     public static Properties loadFile(String path) {
         Properties properties = new Properties();

@@ -3,11 +3,10 @@ package me.reidj.service.util;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import me.reidj.client.util.Utils;
 
 import java.io.IOError;
 import java.util.Properties;
-
-import static me.reidj.service.util.Utils.RESOURCES;
 
 @UtilityClass
 public class DbUtil {
@@ -19,18 +18,21 @@ public class DbUtil {
     public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
     public static final String UPDATE_USER_DATA = "UPDATE users SET name = ?, surname = ?, patronymic = ?, password = ? WHERE id = ?";
+    public static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";
 
     private static final String DB_USERNAME = "db.username";
     private static final String DB_PASSWORD = "db.password";
     private static final String DB_URL = "db.url";
     private static final String DB_DRIVER_CLASS = "driver.class.name";
 
+    private static final String RESOURCES_PATH = "service/src/main/resources/";
+
     @Getter
     private HikariDataSource dataSource;
 
     static {
         try {
-            Properties properties = Utils.loadFile(RESOURCES + "database.properties");
+            Properties properties = Utils.loadFile(RESOURCES_PATH + "database.properties");
 
             dataSource = new HikariDataSource();
             dataSource.setDriverClassName(properties.getProperty(DB_DRIVER_CLASS));

@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.exception.Errors;
@@ -72,6 +71,11 @@ public class LoginScene extends AbstractScene {
     @FXML
     private void openRegistrationOverlay() {
         App.getApp().getPrimaryStage().showScene(App.getApp().getRegistrationScene().getScene());
+    }
+
+    @FXML
+    void openPasswordRecoveryOverlay() {
+        App.getApp().getPrimaryStage().showScene(App.getApp().getForgottenPasswordScene().getScene());
     }
 
     private void checkboxPressed() {

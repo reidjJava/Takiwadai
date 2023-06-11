@@ -3,6 +3,7 @@ package me.reidj.service;
 import lombok.val;
 import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
+import me.reidj.client.protocol.GenerateNewPasswordPackage;
 import me.reidj.client.protocol.LoginUserPackage;
 import me.reidj.client.protocol.RegistrationUserPackage;
 import me.reidj.client.protocol.UpdateUserDataPackage;
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.Random;
 
 import static me.reidj.client.network.Nats.connect;
 import static me.reidj.service.util.DbUtil.*;
@@ -117,5 +119,44 @@ public class App {
                 e.printStackTrace();
             }
         }, "updateUserData");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received generateNewPassword: " + request);
+
+            val generateNewPasswordPackage = Nats.getGson().fromJson(request, GenerateNewPasswordPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                var statement = connection.prepareStatement(SELECT_USER_BY_EMAIL);
+
+                statement.setString(1, generateNewPasswordPackage.getEmail());
+
+                val resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    val newPassword = passwordGenerator();
+                    statement = connection.prepareStatement(UPDATE_USER_PASSWORD);
+                    statement.setString(1, newPassword);
+                    statement.setString(2, generateNewPasswordPackage.getEmail());
+                    statement.executeUpdate();
+
+                    generateNewPasswordPackage.setName(resultSet.getString("name"));
+                    generateNewPasswordPackage.setNewPassword(newPassword);
+                } else {
+                    generateNewPasswordPackage.setException(Exceptions.EMAIL_NOT_FOUND);
+                }
+                Nats.publish(message.getReplyTo(), generateNewPasswordPackage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, "generateNewPassword");
+    }
+
+    private static String passwordGenerator() {
+        return new Random()
+                .ints(10, 33, 122)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }
