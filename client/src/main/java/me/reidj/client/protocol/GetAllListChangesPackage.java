@@ -3,7 +3,7 @@ package me.reidj.client.protocol;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import me.reidj.client.data.LogData;
+import me.reidj.client.data.ApplicationData;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,5 +13,5 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class GetAllListChangesPackage extends CorePackage {
 
-    public Set<LogData> logDataSet = new HashSet<>();
+    public Set<ApplicationData> applicationDataSet = new HashSet<>();
 }

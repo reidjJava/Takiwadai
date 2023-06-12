@@ -19,6 +19,7 @@ public class DbUtil {
     public static final String SELECT_ALL_APPLICATIONS = "SELECT * FROM users JOIN applications ON users.id = applications.userId";
     public static final String SELECT_APPLICATION_CREATOR_BY_ID = "SELECT * FROM users JOIN applications ON users.id = applications.userId WHERE id = ?";
     public static final String SELECT_ALL_LIST_CHANGES = "SELECT * FROM users JOIN list_changes ON users.id = list_changes.userId";
+    public static final String SELECT_DATE_BETWEEN = "SELECT * FROM users JOIN applications ON users.id = applications.userId WHERE date BETWEEN ? AND ? AND status = ?";
     public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
     public static final String CREATE_CHANGELOG = "INSERT INTO list_changes (dateChange, userId, description) VALUES(?, ?, ?);";
     public static final String CREATE_APPLICATION = "INSERT INTO applications (userId, description, date, time, category, status, reason) VALUES(?, ?, ?, ?, ?, ?, ?);";

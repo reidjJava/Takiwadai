@@ -7,7 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.scene.AbstractScene;
-import me.reidj.client.data.LogData;
+import me.reidj.client.data.ApplicationData;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.AddToChangelogPackage;
 import me.reidj.client.protocol.GetAllListChangesPackage;
@@ -15,13 +15,13 @@ import me.reidj.client.protocol.GetAllListChangesPackage;
 public class ChangelogScene extends AbstractScene {
 
     @FXML
-    private TableColumn<LogData, String> changesColumn;
+    private TableColumn<ApplicationData, String> changesColumn;
     @FXML
-    private TableColumn<LogData, String> dateChangeColumn;
+    private TableColumn<ApplicationData, String> dateChangeColumn;
     @FXML
-    private TableColumn<LogData, String> descriptionColumn;
+    private TableColumn<ApplicationData, String> descriptionColumn;
     @FXML
-    private TableView<LogData> logsTable;
+    private TableView<ApplicationData> logsTable;
 
     public ChangelogScene() {
         super("changelog/changelogScene.fxml");
@@ -38,7 +38,7 @@ public class ChangelogScene extends AbstractScene {
                 "getAllListChanges"
         );
 
-        logsTable.getItems().addAll(response.getLogDataSet());
+        logsTable.getItems().addAll(response.getApplicationDataSet());
     }
 
     @FXML

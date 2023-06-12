@@ -1,7 +1,7 @@
 package me.reidj.service;
 
 import lombok.val;
-import me.reidj.client.data.LogData;
+import me.reidj.client.data.ApplicationData;
 import me.reidj.client.data.UserDto;
 import me.reidj.client.exception.Exceptions;
 import me.reidj.client.network.Nats;
@@ -11,6 +11,7 @@ import me.reidj.service.util.DbUtil;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
 
 import static me.reidj.client.network.Nats.connect;
 import static me.reidj.service.util.DbUtil.*;
@@ -181,24 +182,7 @@ public class App {
 
             try (val connection = DbUtil.getDataSource().getConnection()) {
                 val statement = connection.prepareStatement(SELECT_ALL_APPLICATIONS);
-                val resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    getAllApplicationsPackage.getLogDataSet().add(
-                            new LogData(
-                                    resultSet.getInt("applicationId"),
-                                    resultSet.getInt("id"),
-                                    resultSet.getString("name") + " "
-                                            + resultSet.getString("surname") + " "
-                                            + resultSet.getString("patronymic"),
-                                    resultSet.getString("date") + " "
-                                            + resultSet.getString("time"),
-                                    resultSet.getString("category"),
-                                    resultSet.getString("description"),
-                                    resultSet.getString("status"),
-                                    resultSet.getString("reason")
-                            )
-                    );
-                }
+                getApplication(statement, getAllApplicationsPackage.getApplicationDataSet());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -269,9 +253,10 @@ public class App {
                 val resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
-                    userApplicationPackage.getLogDataSet().add(
-                            new LogData(
+                    userApplicationPackage.getApplicationDataSet().add(
+                            new ApplicationData(
                                    resultSet.getString("date") + " " + resultSet.getString("time"),
+                                   resultSet.getInt("id"),
                                    resultSet.getString("category"),
                                    resultSet.getString("description"),
                                    resultSet.getString("status"),
@@ -297,8 +282,8 @@ public class App {
                 val resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
-                    getAllListChangesPackage.getLogDataSet().add(
-                            new LogData(
+                    getAllListChangesPackage.getApplicationDataSet().add(
+                            new ApplicationData(
                                     resultSet.getString("name") + " "
                                             + resultSet.getString("surname") + " "
                                             + resultSet.getString("patronymic"),
@@ -331,6 +316,47 @@ public class App {
                 throw new RuntimeException(e);
             }
         }, "createChangelog");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received getAllApplicationsInInterval: " + request);
+
+            val getAllApplicationsIntervalPackage = Nats.getGson().fromJson(request, GetAllApplicationsIntervalPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(SELECT_DATE_BETWEEN);
+
+                statement.setDate(1, Date.valueOf(getAllApplicationsIntervalPackage.getFirstDate()));
+                statement.setDate(2, Date.valueOf(getAllApplicationsIntervalPackage.getSecondDate()));
+                statement.setString(3, getAllApplicationsIntervalPackage.getStatus());
+
+                getApplication(statement, getAllApplicationsIntervalPackage.getApplicationDataSet());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Nats.publish(message.getReplyTo(), getAllApplicationsIntervalPackage);
+        }, "getAllApplicationsInInterval");
+    }
+
+    private static void getApplication(PreparedStatement statement, Set<ApplicationData> applicationDataSet) throws SQLException {
+        val resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            applicationDataSet.add(
+                    new ApplicationData(
+                            resultSet.getInt("applicationId"),
+                            resultSet.getInt("id"),
+                            resultSet.getString("name") + " "
+                                    + resultSet.getString("surname") + " "
+                                    + resultSet.getString("patronymic"),
+                            resultSet.getString("date") + " " + resultSet.getString("time"),
+                            resultSet.getString("category"),
+                            resultSet.getString("description"),
+                            resultSet.getString("status"),
+                            resultSet.getString("reason")
+                    )
+            );
+        }
     }
 
     private static String passwordGenerator() {

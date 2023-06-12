@@ -16,6 +16,7 @@ import me.reidj.application.scene.profile.ProfileScene;
 import me.reidj.application.scene.registration.RegistrationScene;
 import me.reidj.application.service.MailSender;
 import me.reidj.application.user.User;
+import me.reidj.application.wordprocessor.WordDocumentProcessor;
 import me.reidj.client.network.Nats;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class App extends Application {
 
     private FileManager fileManager;
     private MailSender mailSender;
+    private WordDocumentProcessor wordDocumentProcessor;
     @Setter
     private User user;
 
@@ -56,8 +58,9 @@ public class App extends Application {
         changelogScene = new ChangelogScene();
 
         mailSender = new MailSender();
+        wordDocumentProcessor = new WordDocumentProcessor();
         fileManager = new FileManager();
-        fileManager.createFileInAppdataDir(FileManager.FILE_NAME);
+        fileManager.createFileInAppdataDir();
 
         primaryStage.setScene(loginScene.getScene());
 

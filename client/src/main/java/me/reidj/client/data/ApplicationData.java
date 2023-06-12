@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class LogData {
+public class ApplicationData {
 
     public final int id;
     public final int creatorId;
@@ -14,18 +14,17 @@ public class LogData {
     public final String category;
     public final String description;
     public final String status;
-
     public final String reason;
 
-    public LogData(String creator, int creatorId, String dateCreation, String category, String description, String status, String reason) {
+    public ApplicationData(String creator, int creatorId, String dateCreation, String category, String description, String status, String reason) {
         this(0, creatorId, creator, dateCreation, category, description, status, reason);
     }
 
-    public LogData(String dateCreation, String category, String description, String status, String reason) {
-        this(0, 0, null, dateCreation, category, description, status, reason);
+    public ApplicationData(String dateCreation, int creatorId, String category, String description, String status, String reason) {
+        this(0, creatorId, null, dateCreation, category, description, status, reason);
     }
 
-    public LogData(String creator, String dateChange, String description) {
+    public ApplicationData(String creator, String dateChange, String description) {
         this(creator, 0, dateChange, null, description, null, null);
     }
 }

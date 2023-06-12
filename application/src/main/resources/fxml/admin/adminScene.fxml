@@ -17,6 +17,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.reidj.application.scene.admin.AdminScene">
     <children>
+      <Button fx:id="updateStatusApplicationButton1" layoutX="879.0" layoutY="485.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Обновить сотрудника">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <JFXComboBox fx:id="statusesComboBox1" focusColor="#3f2679" layoutX="879.0" layoutY="440.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" unFocusColor="#2c1a54" />
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="435.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" styleClass="full-logo" />
         <Label layoutX="436.0" layoutY="123.0" styleClass="big-text" text="Заявки" textFill="#545454" />
         <ImageView fitHeight="63.0" fitWidth="70.0" layoutX="658.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="exit-button" x="580.0" />
@@ -31,7 +37,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <ImageView fitHeight="22.0" fitWidth="20.0" layoutX="630.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" styleClass="word-button" x="580.0" />
+        <ImageView fitHeight="22.0" fitWidth="20.0" layoutX="630.0" layoutY="32.0" onMouseClicked="#openPrintMenu" pickOnBounds="true" preserveRatio="true" styleClass="word-button" x="580.0" />
         <JFXComboBox fx:id="statusesComboBox" focusColor="#3f2679" layoutX="529.0" layoutY="440.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" unFocusColor="#2c1a54" />
         <TableView fx:id="logsTableView" layoutX="409.0" layoutY="162.0" prefHeight="260.0" prefWidth="889.0">
             <columns>
@@ -75,29 +81,23 @@
             <Label styleClass="big-text" text="Takiwadai" textFill="WHITE" />
          </children>
       </VBox>
-      <AnchorPane layoutX="399.0" prefHeight="600.0" prefWidth="802.0" style="-fx-background-color: rgba(0, 0, 0, 0.8);" visible="false">
+      <AnchorPane fx:id="printingInWordPane" layoutX="399.0" prefHeight="600.0" prefWidth="802.0" style="-fx-background-color: rgba(0, 0, 0, 0.8);" visible="false">
          <children>
             <DatePicker fx:id="firstDatePicker" layoutX="203.0" layoutY="191.0" promptText="Выберите 1 дату" />
             <DatePicker fx:id="secondDatePicker" layoutX="452.0" layoutY="191.0" promptText="Выберите 2 дату" />
             <JFXComboBox fx:id="printableStatusesComboBox" focusColor="#3f2679" layoutX="251.0" layoutY="273.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Выберите статус" style="-fx-background-color: white;" unFocusColor="#2c1a54" />
-            <Button layoutX="101.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Распечатать">
+            <Button layoutX="101.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#goPrintData" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Распечатать">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="443.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Отмена">
+            <Button layoutX="443.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#cancelPrintWord" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Отмена">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="updateStatusApplicationButton1" layoutX="879.0" layoutY="485.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" styleClass="button" text="Обновить сотрудника">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <JFXComboBox fx:id="statusesComboBox1" focusColor="#3f2679" layoutX="879.0" layoutY="440.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" unFocusColor="#2c1a54" />
     </children>
     <stylesheets>
         <URL value="@admin.css" />

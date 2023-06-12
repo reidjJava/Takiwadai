@@ -7,24 +7,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.val;
 import me.reidj.application.App;
 import me.reidj.application.scene.AbstractScene;
-import me.reidj.client.data.LogData;
+import me.reidj.client.data.ApplicationData;
 import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.GetUserApplicationPackage;
 
 public class LogScene extends AbstractScene {
 
     @FXML
-    private TableColumn<LogData, String> categoryColumn;
+    private TableColumn<ApplicationData, String> categoryColumn;
     @FXML
-    private TableColumn<LogData, String> dateCreationColumn;
+    private TableColumn<ApplicationData, String> dateCreationColumn;
     @FXML
-    private TableColumn<LogData, String> descriptionColumn;
+    private TableColumn<ApplicationData, String> descriptionColumn;
     @FXML
-    private TableView<LogData> logsTable;
+    private TableView<ApplicationData> logsTable;
     @FXML
-    private TableColumn<LogData, String> reasonColumn;
+    private TableColumn<ApplicationData, String> reasonColumn;
     @FXML
-    private TableColumn<LogData, String> statusColumn;
+    private TableColumn<ApplicationData, String> statusColumn;
 
     public LogScene() {
         super("log/logScene.fxml");
@@ -42,7 +42,7 @@ public class LogScene extends AbstractScene {
                 new GetUserApplicationPackage(App.getApp().getUser().id()),
                 "getUserApplication"
         );
-        logsTable.getItems().addAll(reason.getLogDataSet());
+        logsTable.getItems().addAll(reason.getApplicationDataSet());
     }
 
 

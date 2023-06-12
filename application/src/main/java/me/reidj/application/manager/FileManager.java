@@ -7,22 +7,22 @@ import java.nio.file.*;
 public class FileManager {
 
     private static final String DIRECTORY = "Takiwadai";
-    public static final String FILE_NAME = "settings.json";
+    private static final String FILE_NAME = "settings.json";
 
     private static Path path;
 
-    public void createFileInAppdataDir(String url) throws IOException {
+    public void createFileInAppdataDir() throws IOException {
         Path appdata = getAppdataDir().resolve(DIRECTORY);
         if (isDir(appdata)) {
             Files.createDirectories(appdata);
         }
-        path = appdata.resolve(url);
+        path = appdata.resolve(FILE_NAME);
         if (isExists()) {
             Files.createFile(path);
         }
     }
 
-    public void createFile(String url) throws IOException {
+    public void createFileByPath(String url) throws IOException {
         path = Paths.get(new File(url).toURI());
         if (isExists() && isDir(path)) {
             Files.createFile(path);
