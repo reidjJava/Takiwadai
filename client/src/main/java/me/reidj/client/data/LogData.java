@@ -24,4 +24,8 @@ public class LogData {
     public LogData(String dateCreation, String category, String description, String status, String reason) {
         this(0, 0, null, dateCreation, category, description, status, reason);
     }
+
+    public LogData(String creator, String dateChange, String description) {
+        this(creator, 0, dateChange, null, description, null, null);
+    }
 }

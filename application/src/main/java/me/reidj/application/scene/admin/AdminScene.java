@@ -97,6 +97,7 @@ public class AdminScene extends AbstractScene {
                     "Заявка удалена успешно!", ""
             );
             fillTableWithApplications();
+            App.getApp().getChangelogScene().saveChange("Заявка с кодом: " + id + " была удалена.");
         });
     }
 
@@ -116,8 +117,9 @@ public class AdminScene extends AbstractScene {
     private void sendingStatusUpdatePackage(int id, int creatorId) {
         val status = statusesComboBox.getValue();
         val has = status.equalsIgnoreCase(StatusType.DENIED.getTitle());
+        val reason = reasonField.getText();
         val response = (UpdateStatusApplicationPackage) Nats.publishAndWaitResponse(
-                new UpdateStatusApplicationPackage(id, creatorId, status, has ? reasonField.getText() : null),
+                new UpdateStatusApplicationPackage(id, creatorId, status, has ? reason : null),
                 "updateStatusApplication"
         );
         val user = response.getUser();
@@ -135,6 +137,10 @@ public class AdminScene extends AbstractScene {
                 Alert.AlertType.INFORMATION,
                 "Статус заявки успешно обновлён!",
                 ""
+        );
+
+        App.getApp().getChangelogScene().saveChange(
+                "Заявка с кодом " + id + " .Обновлён статус - " + status
         );
 
         fillTableWithApplications();

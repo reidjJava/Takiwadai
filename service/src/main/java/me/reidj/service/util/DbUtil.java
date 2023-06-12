@@ -13,12 +13,14 @@ public class DbUtil {
 
     public static final String CREATE_TABLE_USERS = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT, name TEXT, surname TEXT, patronymic TEXT, email TEXT, password TEXT, PRIMARY KEY(id));";
     public static final String CREATE_TABLE_APPLICATIONS = "CREATE TABLE IF NOT EXISTS applications (applicationId INT AUTO_INCREMENT, userId INT, description TEXT, date DATE, time TIME, category TEXT, status TEXT, reason TEXT NULL, PRIMARY KEY (applicationId), FOREIGN KEY(userId) REFERENCES users (id));";
-    public static final String CREATE_TABLE_LIST_CHANGES = "CREATE TABLE IF NOT EXISTS list_changes (id INT AUTO_INCREMENT, dateChange TIMESTAMP, userId INT, description TEXT, PRIMARY KEY (id), FOREIGN KEY(userId) REFERENCES users (id))";
+    public static final String CREATE_TABLE_LIST_CHANGES = "CREATE TABLE IF NOT EXISTS list_changes (idChanges INT AUTO_INCREMENT, dateChange TIMESTAMP, userId INT, description TEXT, PRIMARY KEY (idChanges), FOREIGN KEY(userId) REFERENCES users (id))";
     public static final String SELECT_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
     public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     public static final String SELECT_ALL_APPLICATIONS = "SELECT * FROM users JOIN applications ON users.id = applications.userId";
     public static final String SELECT_APPLICATION_CREATOR_BY_ID = "SELECT * FROM users JOIN applications ON users.id = applications.userId WHERE id = ?";
+    public static final String SELECT_ALL_LIST_CHANGES = "SELECT * FROM users JOIN list_changes ON users.id = list_changes.userId";
     public static final String CREATE_USER = "INSERT INTO users (name, surname, patronymic, email, password) VALUES(?, ?, ?, ?, ?);";
+    public static final String CREATE_CHANGELOG = "INSERT INTO list_changes (dateChange, userId, description) VALUES(?, ?, ?);";
     public static final String CREATE_APPLICATION = "INSERT INTO applications (userId, description, date, time, category, status, reason) VALUES(?, ?, ?, ?, ?, ?, ?);";
     public static final String UPDATE_USER_DATA = "UPDATE users SET name = ?, surname = ?, patronymic = ?, password = ? WHERE id = ?";
     public static final String UPDATE_USER_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";

@@ -25,7 +25,7 @@
          </columns>
       </TableView>
       <ImageView fitHeight="63.0" fitWidth="70.0" layoutX="946.0" layoutY="20.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true" styleClass="exit-button" />
-      <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="935.0" layoutY="34.0" onMouseClicked="#backToLoginScreen" pickOnBounds="true" preserveRatio="true" styleClass="move-button" />
+      <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="935.0" layoutY="34.0" onMouseClicked="#backAdminOverlay" pickOnBounds="true" preserveRatio="true" styleClass="move-button" />
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #2c1a54;">
          <children>
             <ImageView fitHeight="103.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">

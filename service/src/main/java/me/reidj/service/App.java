@@ -8,10 +8,7 @@ import me.reidj.client.network.Nats;
 import me.reidj.client.protocol.*;
 import me.reidj.service.util.DbUtil;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -287,6 +284,53 @@ public class App {
             }
             Nats.publish(message.getReplyTo(), userApplicationPackage);
         }, "getUserApplication");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received getAllListChanges: " + request);
+
+            val getAllListChangesPackage = Nats.getGson().fromJson(request, GetAllListChangesPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(SELECT_ALL_LIST_CHANGES);
+                val resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    getAllListChangesPackage.getLogDataSet().add(
+                            new LogData(
+                                    resultSet.getString("name") + " "
+                                            + resultSet.getString("surname") + " "
+                                            + resultSet.getString("patronymic"),
+                                    resultSet.getString("dateChange"),
+                                    resultSet.getString("description")
+                            )
+                    );
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            Nats.publish(message.getReplyTo(), getAllListChangesPackage);
+        }, "getAllListChanges");
+
+        Nats.registerHandler((message) -> {
+            val request = new String(message.getData());
+
+            System.out.println("Received createChangelog: " + request);
+
+            val addToChangelogPackage = Nats.getGson().fromJson(request, AddToChangelogPackage.class);
+
+            try (val connection = DbUtil.getDataSource().getConnection()) {
+                val statement = connection.prepareStatement(CREATE_CHANGELOG);
+
+                statement.setTimestamp(1, new Timestamp(addToChangelogPackage.getDateChange()));
+                statement.setInt(2, addToChangelogPackage.getUserId());
+                statement.setString(3, addToChangelogPackage.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }, "createChangelog");
     }
 
     private static String passwordGenerator() {
